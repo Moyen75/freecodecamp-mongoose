@@ -95,6 +95,7 @@ const queryChain = (done) => {
     .limit(2)
     .select({ age: 0 })
     .exec(function (error, data) {
+      if (error) return console.log(error)
       done(null, data);
     });
 };

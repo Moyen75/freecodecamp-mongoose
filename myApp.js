@@ -29,7 +29,7 @@ const createManyPeople = (arrayOfPeople, done) => {
 };
 
 const findPeopleByName = (personName, done) => {
-  Person.find({ name: personName }, function(err, personFound) {
+  Person.find({ name: personName }, function (err, personFound) {
     if (err) return console.log(err);
     done(null, personFound);
   });
@@ -44,7 +44,7 @@ const findOneByFood = (food, done) => {
 };
 
 const findPersonById = (personId, done) => {
-  Person.findById(personId, function(err, data) {
+  Person.findById(personId, function (err, data) {
     if (err) return console.log(err);
     done(null, data);
   });
@@ -90,8 +90,13 @@ const removeManyPeople = (done) => {
 
 const queryChain = (done) => {
   const foodToSearch = "burrito";
-
-  done(null /*, data*/);
+  Person.find({ favoriteFoods: foodToSearch })
+    .sort({ name: 1 })
+    .limit(2)
+    .select({ age: 0 })
+    .exec(function (error, data) {
+      done(null, data);
+    });
 };
 
 /** **Well Done !!**
